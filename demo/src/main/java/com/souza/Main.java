@@ -5,7 +5,7 @@ public class Main {
         ExpressaoRegular er = new ExpressaoRegular();
         String teste1 = "int x";
         String teste2 = "float media, String nome";
-        String teste3 = "int x, double y, String texto";
+        String teste3 = "int x, double y, String texto, int t";
         
         er.confere(er.PARAMETROFUNC, teste1);
         er.confere(er.PARAMETROFUNC, teste2);
@@ -16,9 +16,14 @@ public class Main {
         er.confere(er.REAL, "123.908777E+30");
         er.confere(er.REAL, "0.17E-5");
         er.confere(er.INTEIRO, "10");
-        er.confere(er.CONDICAO, "if(3*a!=4+t)");
+        er.confere(er.CONDICAO, "if(3*a != 4+t)");
+        er.confere(er.CONDICAO, "if(ano<1990 && ano<1980)");
         er.confere(er.CONDICAO, "if(ano<1990)");
+        er.confere(er.CONDICAO, "if(a==1 && b!=2 && c>3)");
         er.confere(er.EXPRESSAOARITMETICA, "3 + media/3");
-        er.confere(er.EXPRESSAOARITMETICA, "-4 + beta * media[1].x * soma(a,b)/4 * vetor[5].idade");
+        er.confere(er.EXPRESSAOARITMETICA, "-4 + beta * media[9+1+soma(8,9)].x * soma(a,b)/4 * vetor[5].idade");
+        er.confere(er.EXPRESSAOARITMETICA, "1 + 1");
+        er.confere(er.PALAVRA, "int");
+        
     }
 }

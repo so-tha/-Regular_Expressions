@@ -1,7 +1,6 @@
 package com.souza;
 
 public class  ExpressaoRegular {
-
     public String BRANCO, BRANCOS;
     public String DIGITO, DIGITOS;
     public String LETRA, LETRAS;
@@ -27,17 +26,19 @@ public class  ExpressaoRegular {
     public String ARRAY;
     public String CHAMADAFUNC;
     public String MEMBER_ACCESS;
+    public String OPERADORLOGICO;
 
     public  ExpressaoRegular() {    
-        BRANCO = "([ \\s])";
+        BRANCO = "\\s";
         VIRGULA = ",";
-        BRANCOS = "([ \\s]*)";
+        BRANCOS = "\\s*";
         DIGITO = "([0-9])";
         DIGITOS = "([0-9]*)";
         LETRA = "([a-zA-Z])";
         LETRAS = LETRA + "*";
         PALAVRA = LETRAS + "(" + LETRAS + "|" + DIGITO + ")*";
         SIMBOLOSRELACIONAIS = "(<|>|<=|>=|==|!=)";
+        OPERADORLOGICO = "(\\&\\&|\\|\\|)";
         SIMBOLOSARI = "(\\+|\\-|\\*|\\/|\\(|\\))";
         EXPONENCIAL = "(E(\\+|-)" + DIGITOS + ")";
         FRACIONARIA = "\\." + DIGITOS + EXPONENCIAL + "?";
@@ -47,23 +48,28 @@ public class  ExpressaoRegular {
         ESTRUCONDICIONAL = "(if|else)";
         MEMBER_ACCESS = "(\\.\\w+)";
         OPERADOR = "(\\+|\\-|\\*|\\/)";
-        ARRAY = "(\\[\\d+\\])";
+        ARRAY = "(\\[" + EXPRESSAOARITMETICA + "\\])";
         CHAMADAFUNC = "(\\w+\\([^\\)]*\\))";
         VARIAVEL = "([a-zA-Z_]" + "(" + LETRAS + "|" + DIGITOS + "|_)*" + ")";
-        TERMO = "(-?\\d+|" + VARIAVEL + ARRAY + "?" + MEMBER_ACCESS + "?|" + CHAMADAFUNC + ")";
+        TERMO = "(-?\\d+|" + VARIAVEL + 
+                "(" + ARRAY + "|" + MEMBER_ACCESS + ")*" + 
+                "|" + CHAMADAFUNC + ")";
         EXPRESSAO = TERMO + "(" + "\\s*" + SIMBOLOSARI + "\\s*" + TERMO + ")*";
-        CONDICAO = ESTRUCONDICIONAL + "\\s*\\(\\s*" + 
-                   EXPRESSAO + "\\s*" + SIMBOLOSRELACIONAIS + "\\s*" + EXPRESSAO + 
-                   "\\s*\\)";
-        ASSFUNCOES = TIPOS +  BRANCOS  + PALAVRA + BRANCOS + "(" + TIPOS + VIRGULA + BRANCOS + PALAVRA + "(," + "\\)" + BRANCO + "\\;"; 
+        CONDICAO = ESTRUCONDICIONAL + BRANCOS + "\\(" + BRANCOS + 
+           EXPRESSAO + BRANCOS + SIMBOLOSRELACIONAIS + BRANCOS + EXPRESSAO +
+           "(" + BRANCOS + OPERADORLOGICO + BRANCOS + 
+           EXPRESSAO + BRANCOS + SIMBOLOSRELACIONAIS + BRANCOS + EXPRESSAO + ")*" +
+           BRANCOS + "\\)";
+        ASSFUNCOES = TIPOS + BRANCOS + PALAVRA + BRANCOS + "\\(" + 
+                     "(" + BRANCOS + PARAMETROFUNC + BRANCOS + ")?" + "\\)" + BRANCOS + "\\;";
         PARAMETROFUNC = TIPOS + BRANCOS + PALAVRA + "(" + BRANCOS + VIRGULA + BRANCOS + TIPOS + BRANCOS + PALAVRA + ")*";
         EXPRESSAOARITMETICA = TERMO + 
                              "(" + BRANCOS + OPERADOR + BRANCOS + TERMO + ")*";
+
     }
 
     public void confere(String er, String sentenca) {
         System.out.println("Testando: " + sentenca);
-        System.out.println("Expressão: " + er);
         if (sentenca.matches(er)) {
             System.out.println("A sentenca foi aceita");
         } else {
