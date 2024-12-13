@@ -27,6 +27,8 @@ public class  ExpressaoRegular {
     public String CHAMADAFUNC;
     public String MEMBER_ACCESS;
     public String OPERADORLOGICO;
+    public String PROP_ACCESS;
+    public String EXPRESSAOARITMETICA_COMPLEXA;
 
     public  ExpressaoRegular() {    
         BRANCO = "\\s";
@@ -48,11 +50,14 @@ public class  ExpressaoRegular {
         ESTRUCONDICIONAL = "(if|else)";
         MEMBER_ACCESS = "(\\.\\w+)";
         OPERADOR = "(\\+|\\-|\\*|\\/)";
-        ARRAY = "(\\[" + EXPRESSAOARITMETICA + "\\])";
-        CHAMADAFUNC = "(\\w+\\([^\\)]*\\))";
+        ARRAY = "(\\[\\s*(\\d+|\\w+)(\\s*[+\\-*/]\\s*(\\d+|\\w+|\\w+\\s*\\([^\\)]*\\)))*\\s*\\])";
+        PROP_ACCESS = "(\\\\[\\w+\\])";
+        CHAMADAFUNC = "(\\w+\\s*\\([^\\)]*\\))";
         VARIAVEL = "([a-zA-Z_]" + "(" + LETRAS + "|" + DIGITOS + "|_)*" + ")";
         TERMO = "(-?\\d+|" + VARIAVEL + 
-                "(" + ARRAY + "|" + MEMBER_ACCESS + ")*" + 
+                "(" + ARRAY + "?" + MEMBER_ACCESS + "?" + 
+                "|" + MEMBER_ACCESS + "?" + ARRAY + "?" + 
+                "|" + CHAMADAFUNC + ")*" + 
                 "|" + CHAMADAFUNC + ")";
         EXPRESSAO = TERMO + "(" + "\\s*" + SIMBOLOSARI + "\\s*" + TERMO + ")*";
         CONDICAO = ESTRUCONDICIONAL + BRANCOS + "\\(" + BRANCOS + 
@@ -65,7 +70,8 @@ public class  ExpressaoRegular {
         PARAMETROFUNC = TIPOS + BRANCOS + PALAVRA + "(" + BRANCOS + VIRGULA + BRANCOS + TIPOS + BRANCOS + PALAVRA + ")*";
         EXPRESSAOARITMETICA = TERMO + 
                              "(" + BRANCOS + OPERADOR + BRANCOS + TERMO + ")*";
-
+        EXPRESSAOARITMETICA_COMPLEXA = TERMO + 
+            "(" + BRANCOS + OPERADOR + BRANCOS + TERMO + ")*";
     }
 
     public void confere(String er, String sentenca) {

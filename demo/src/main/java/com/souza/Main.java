@@ -21,9 +21,12 @@ public class Main {
         er.confere(er.CONDICAO, "if(ano<1990)");
         er.confere(er.CONDICAO, "if(a==1 && b!=2 && c>3)");
         er.confere(er.EXPRESSAOARITMETICA, "3 + media/3");
-        er.confere(er.EXPRESSAOARITMETICA, "-4 + beta * media[9+1+soma(8,9)].x * soma(a,b)/4 * vetor[5].idade");
+        er.confere(er.EXPRESSAOARITMETICA_COMPLEXA, "-4 + beta * media[9+1+soma(8,9)].x * soma(a,b)/4 * vetor[5].idade");
         er.confere(er.EXPRESSAOARITMETICA, "1 + 1");
         er.confere(er.PALAVRA, "int");
         
+        er.confere(er.TERMO, "media[9+1+soma(8,9)].x");
+        er.confere(er.TERMO, "soma(a,b)");
+        er.confere(er.TERMO, "vetor[5].idade");
     }
 }
